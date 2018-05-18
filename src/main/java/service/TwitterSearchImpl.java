@@ -2,21 +2,22 @@ package service;
 
 import entity.Tweet;
 import exception.InvalidQueryException;
+
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class TwitterSearchImpl extends TwitterSearch {
-
-    private final AtomicInteger counter = new AtomicInteger();
 
     @Override
     public boolean saveTweets(List<Tweet> tweets) {
         if(tweets!=null) {
             for (Tweet tweet : tweets) {
-                System.out.println(counter.getAndIncrement() + 1 + "[" + tweet.getCreatedAt() + "] - " + tweet.getText());
-                if (counter.get() >= 500) {
+                String message = counter.getAndIncrement() + 1 + "[" + tweet.getCreatedAt() + "] "+tweet.getUserName()+" - " + tweet.getText();
+                counterRetweets += tweet.getRetweets();
+                counterFavourites += tweet.getFavourites();
+                infoLog.info(message);
+//                tweets.add(tweet);
+                if (counter.get()==1000)
                     return false;
-                }
             }
         }
         return true;
@@ -24,6 +25,11 @@ public class TwitterSearchImpl extends TwitterSearch {
 
     public static void main(String[] args) throws InvalidQueryException {
         TwitterSearch twitterSearch = new TwitterSearchImpl();
-        twitterSearch.search("babylon 5", 2);
+        twitterSearch.search("Порошенко", 5);
+        twitterSearch.search("Путин", 5);
+        twitterSearch.search("sex", 5);
+        twitterSearch.search("apple", 5);
+        twitterSearch.search("KPI", 5);
+        twitterSearch.search("God", 5);
     }
 }

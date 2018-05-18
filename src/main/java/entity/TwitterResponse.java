@@ -24,7 +24,6 @@ public class TwitterResponse {
 
     public List<Tweet> getTweets() {
         final List<Tweet> tweets = new ArrayList<>();
-//        System.out.println(items_html);
         Document doc = Jsoup.parse(items_html);
         for(Element el : doc.select("li.js-stream-item")) {
             String id = el.attr("data-item-id");
@@ -74,13 +73,13 @@ public class TwitterResponse {
                 e.printStackTrace();
             }
             try {
-                retweets = Integer.parseInt(el.select("span.ProfileTweet-action--retweet &gt; span.ProfileTweet-actionCount")
+                retweets = Integer.parseInt(el.select("span.ProfileTweet-action--retweet > span.ProfileTweet-actionCount")
                         .attr("data-tweet-stat-count"));
             } catch(NullPointerException e) {
                 e.printStackTrace();
             }
             try {
-                favourites = Integer.parseInt(el.select("span.ProfileTweet-action--favorite &gt; span.ProfileTweet-actionCount")
+                favourites = Integer.parseInt(el.select("span.ProfileTweet-action--favorite > span.ProfileTweet-actionCount")
                         .attr("data-tweet-stat-count"));
             } catch (NullPointerException e) {
                 e.printStackTrace();
